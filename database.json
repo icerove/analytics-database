@@ -18,7 +18,7 @@
   "production": {
       "driver": "pg",
       "host": {"ENV": "PGHOST"},
-      "database": "analytics_prod",
+      "database": {"ENV": "PGDATABASE"},
       "user": {"ENV": "PGUSER"},
       "password": {"ENV": "PGPASSWORD"}
   }
