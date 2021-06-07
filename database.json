@@ -3,7 +3,7 @@
       "driver": "pg",
       "host": "localhost",
       "database": "analytics",
-      "user": "icerove",
+      "user": "me",
       "password": "analytics_8"
   },
 

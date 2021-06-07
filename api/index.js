@@ -7,7 +7,7 @@ const query = require('./query')
 
 const router = new Router()
 
-router.use('/auth', auth)
+router.use('/user', auth)
 router.use('/project', project)
 router.use('/query', query)
 
