@@ -27,6 +27,7 @@ const writeQueryValidator = [
 ]
 
 const createQuery = async (req, res) => {
+
   title = req.body.title
   query = req.body.query
   chartType = req.body.chartType
@@ -37,8 +38,10 @@ const createQuery = async (req, res) => {
 }
 
 const updateQuery = async (req, res) => {
+
   query = req.body.query
   queryId = req.params.id
+  
   await pool.query(sql.updateQuery({query, queryId}))
   res.json('query is updated')
 }

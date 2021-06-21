@@ -64,7 +64,7 @@ const writeProjectValidator = [
 const updateProject = async (req, res) => {
   projectName = req.body.projectName
   projectId = req.params.id
-  console.log(projectId)
+
   await pool.query(sql.updateProject({projectName, projectId}))
   res.json('project name updated')
 }

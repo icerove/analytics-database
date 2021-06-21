@@ -4,12 +4,14 @@ const {pool, sql} = require('../db')
 const auth = require('./auth')
 const project = require('./project')
 const query = require('./query')
+const result = require('./result')
 
 const router = new Router()
 
 router.use('/user', auth)
 router.use('/project', project)
 router.use('/query', query)
+router.use('./result', result)
 
 const getProjects = async (req, res) => {
   result = await pool.query(sql.getAllProjects())
