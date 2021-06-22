@@ -8,7 +8,12 @@ INSERT INTO queries (title, query, chart_type, project_id) VALUES
   RETURNING *;
 
 -- updateQuery
-UPDATE queries SET query = :query WHERE query_id = :queryId
+UPDATE queries SET 
+title= :title,
+query = :query,
+chart_type = :chartType,
+project_id = :projectId
+ WHERE query_id = :queryId
 
 -- deleteQuery
 DELETE FROM queries WHERE query_id = :queryId

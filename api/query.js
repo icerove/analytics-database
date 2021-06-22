@@ -39,10 +39,14 @@ const createQuery = async (req, res) => {
 
 const updateQuery = async (req, res) => {
 
+  title = req.body.title
   query = req.body.query
+  chartType = req.body.chartType
+  projectId = req.body.projectId
+
   queryId = req.params.id
   
-  await pool.query(sql.updateQuery({query, queryId}))
+  await pool.query(sql.updateQuery({title, query, chartType, projectId}))
   res.json('query is updated')
 }
 

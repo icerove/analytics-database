@@ -28,10 +28,11 @@ const writeResultValidator = [
 
 const createResult = async (req, res) => {
   
-  result = req.body.result
+  result = req.body.result,
+  executedAt = req.body.executedAt
   queryId = req.body.queryId
   
-  result = await pool.query(sql.createResult({result, queryId}))
+  result = await pool.query(sql.createResult({result, executedAt, queryId}))
   res.status(201).json(result.rows[0])
 }
 
@@ -40,7 +41,7 @@ const updateResult = async (req, res) => {
   result = req.body.result
   resultId = req.params.id
 
-  await pool.query(sql.updateResult({result, resultId}))
+  await pool.query(sql.updateResult({result, executedAt, resultId}))
   res.json('query is updated')
 }
 

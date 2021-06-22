@@ -18,6 +18,7 @@ exports.up = function(db) {
   return db.createTable('results', {
     result_id: { type: 'SERIAL', primaryKey: true },
     result: 'text',
+    executed_at: {type: 'TIMESTAMP'},
     query_id:  {type: 'int', foreignKey: {
       name: 'query_result_id',
       table: 'queries',
