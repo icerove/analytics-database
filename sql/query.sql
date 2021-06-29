@@ -25,3 +25,8 @@ WHERE query_id = :queryId AND project_id = :projectId
 -- getQuery
 SELECT * FROM queries
 WHERE query_id = :queryId
+
+-- transferQuery
+UPDATE queries SET 
+project_id = :projectId
+ WHERE query_id = :queryId
