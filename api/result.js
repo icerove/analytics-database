@@ -57,6 +57,11 @@ const getResult = async (req, res) => {
   res.json(result.rows[0]);
 };
 
+const getResultList = async (req, res) => {
+  result = await pool.query(sql.getResultList());
+  res.json(result.rows[0]);
+};
+
 const router = new Router();
 router.post(
   '/',
@@ -80,5 +85,5 @@ router.delete(
   deleteResult
 );
 router.post('/:id', validationErrorHandler, getResult);
-
+router.get('/', validationErrorHandler, getResultList);
 module.exports = router;
