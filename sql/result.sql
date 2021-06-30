@@ -5,7 +5,7 @@ INSERT INTO results (result, executed_at, query_id) VALUES
   RETURNING *;
 
 -- updateResult
-UPDATE queries SET result = :result, executed_at:executedAt WHERE result_id = :resultId
+UPDATE results SET result = :result, executed_at:executedAt WHERE result_id = :resultId
 
 -- updateTime
 
@@ -13,9 +13,12 @@ UPDATE queries SET result = :result, executed_at:executedAt WHERE result_id = :r
 DELETE FROM results WHERE result_id = :resultId
 
 -- checkResult
-SELECT * FROM queries
+SELECT * FROM results
 WHERE result_id = :resultId AND query_id = :queryId
 
 -- getResult
 SELECT * FROM results
 WHERE result_id = :resultId
+
+-- getResultList
+SELECT result_id, query_id from results order by result_id
