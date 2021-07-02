@@ -85,6 +85,6 @@ router.delete(
   validationErrorHandler,
   deleteQuery
 );
-router.post('/:id', validationErrorHandler, getQuery);
+router.get('/:id', validationErrorHandler, getQuery);
 
 module.exports = router;
