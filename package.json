@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "node ./bin/www",
-    "debug": "nodemon --inspect ./bin/www"
+    "start": "node ./bin/database",
+    "debug": "nodemon --inspect ./bin/database"
   },
   "keywords": [],
   "author": "",
