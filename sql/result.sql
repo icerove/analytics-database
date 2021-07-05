@@ -6,6 +6,7 @@ INSERT INTO results (result, executed_at, query_id) VALUES
 
 -- updateResult
 UPDATE results SET result = :result, executed_at:executedAt WHERE result_id = :resultId
+RETURNING *;
 
 -- deleteResult
 DELETE FROM results WHERE result_id = :resultId
