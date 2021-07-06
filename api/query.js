@@ -41,7 +41,9 @@ const updateQuery = async (req, res) => {
 
   queryId = req.params.id;
 
-  await pool.query(sql.updateQuery({ title, query, chartType, projectId }));
+  await pool.query(
+    sql.updateQuery({ title, query, chartType, projectId, queryId })
+  );
   res.json('Query is updated');
 };
 
