@@ -13,7 +13,8 @@ title= :title,
 query = :query,
 chart_type = :chartType,
 project_id = :projectId
- WHERE query_id = :queryId
+WHERE query_id = :queryId
+RETURNING *;
 
 -- deleteQuery
 DELETE FROM queries WHERE query_id = :queryId
