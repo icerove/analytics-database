@@ -11,7 +11,7 @@ const router = new Router();
 router.use('/user', auth);
 router.use('/project', project);
 router.use('/query', query);
-router.use('./result', result);
+router.use('/result', result);
 
 const getProjects = async (req, res) => {
   project_result = await pool.query(sql.getAllProjects());
