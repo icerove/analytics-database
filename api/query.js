@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { param, body } = require('express-validator');
-const { sanitizeParam } = require('express-validator');
 
 const { validationErrorHandler } = require('./error');
 const { pool, sql } = require('../db');
@@ -10,8 +9,9 @@ const { tokenRequired } = require('../lib/jwt');
 const createQueryValidator = body('content').trim();
 
 const queryIsMine = (id, { req }) => {
+  let uid = Number(id);
   return pool
-    .query(sql.checkQuery({ queryId: id, projectId: req.body.projectId }))
+    .query(sql.checkQuery({ queryId: uid, projectId: req.body.projectId }))
     .then((res) => {
       if (res.rows.length == 0) {
         return Promise.reject("Query doesn't exist or doesn't belong to you");
@@ -19,9 +19,7 @@ const queryIsMine = (id, { req }) => {
     });
 };
 
-const idIntSanitizer = sanitizeParam('id').toInt();
-
-const writeQueryValidator = [idIntSanitizer, param('id').custom(queryIsMine)];
+const writeQueryValidator = param('id').custom(queryIsMine);
 
 const createQuery = async (req, res) => {
   title = req.body.title;

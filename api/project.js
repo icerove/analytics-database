@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { param, body } = require('express-validator');
-const { sanitizeParam } = require('express-validator');
 
 const { validationErrorHandler } = require('./error');
 const { pool, sql } = require('../db');
@@ -42,8 +41,9 @@ const createProject = async (req, res) => {
 };
 
 const projectIsMine = (id, { req }) => {
+  let uid = Number(id);
   return pool
-    .query(sql.checkProject({ userId: req.user.userid, projectId: id }))
+    .query(sql.checkProject({ userId: req.user.userid, projectId: uid }))
     .then((res) => {
       if (res.rows.length == 0) {
         return Promise.reject("Project doesn't exist or doesn't belong to you");
@@ -51,12 +51,7 @@ const projectIsMine = (id, { req }) => {
     });
 };
 
-const idIntSanitizer = sanitizeParam('id').toInt();
-
-const writeProjectValidator = [
-  idIntSanitizer,
-  param('id').custom(projectIsMine),
-];
+const writeProjectValidator = param('id').custom(projectIsMine);
 
 const updateProject = async (req, res) => {
   projectName = req.body.projectName;
@@ -82,15 +77,16 @@ const getAllMyProject = async (req, res) => {
   res.json(result.rows);
 };
 
-const projectExists = (id, { req }) => {
-  return pool.query(sql.readProject({ projectId: id })).then((res) => {
+const projectExists = (id) => {
+  let uid = Number(id);
+  return pool.query(sql.readProject({ projectId: uid })).then((res) => {
     if (res.rows.length === 0) {
       return Promise.reject("Project doesn't exist");
     }
   });
 };
 
-const readQueryValidator = [idIntSanitizer, param('id').custom(projectExists)];
+const readQueryValidator = param('id').custom(projectExists);
 
 const getQueryList = async (req, res) => {
   projectId = req.params.id;

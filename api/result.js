@@ -10,8 +10,9 @@ const { tokenRequired } = require('../lib/jwt');
 const createResultValidator = body('content').trim();
 
 const resultIsMine = (id, { req }) => {
+  let uid = Number(id);
   return pool
-    .query(sql.checkResult({ resultId: id, queryId: req.body.queryId }))
+    .query(sql.checkResult({ resultId: uid, queryId: req.body.queryId }))
     .then((res) => {
       if (res.rows.length == 0) {
         return Promise.reject(
@@ -21,9 +22,7 @@ const resultIsMine = (id, { req }) => {
     });
 };
 
-const idIntSanitizer = sanitizeParam('id').toInt();
-
-const writeResultValidator = [idIntSanitizer, param('id').custom(resultIsMine)];
+const writeResultValidator = param('id').custom(resultIsMine);
 
 const createResult = async (req, res) => {
   (result = req.body.result), (executedAt = req.body.executedAt);
