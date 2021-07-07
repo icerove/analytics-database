@@ -24,10 +24,13 @@ const resultIsMine = (id, { req }) => {
 const writeResultValidator = param('id').custom(resultIsMine);
 
 const createResult = async (req, res) => {
-  (result = req.body.result), (executedAt = req.body.executedAt);
+  result = req.body.result;
+  executedAt = req.body.executedAt;
   queryId = req.body.queryId;
 
-  result = await pool.query(sql.createResult({ result, executedAt, queryId }));
+  result = await pool.query(
+    sql.generateResult({ result, executedAt, queryId })
+  );
   res.status(201).json(result.rows[0]);
 };
 
