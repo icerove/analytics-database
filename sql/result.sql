@@ -1,11 +1,11 @@
 
 -- createResult
-INSERT INTO results (result, executed_at, query_id) VALUES
+INSERT INTO results (query_result, executed_at, query_id) VALUES
   (:result, :executedAt,  :queryId)
   RETURNING *;
 
 -- updateResult
-UPDATE results SET result = :result, executed_at = :executedAt WHERE result_id = :resultId
+UPDATE results SET query_result = :result, executed_at = :executedAt WHERE result_id = :resultId
 RETURNING *;
 
 -- deleteResult
