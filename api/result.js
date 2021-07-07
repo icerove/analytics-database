@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { param, body } = require('express-validator');
-const { sanitizeParam } = require('express-validator');
 
 const { validationErrorHandler } = require('./error');
 const { pool, sql } = require('../db');
