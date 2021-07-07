@@ -28,9 +28,7 @@ const createResult = async (req, res) => {
   executedAt = req.body.executedAt;
   queryId = req.body.queryId;
 
-  result = await pool.query(
-    sql.generateResult({ result, executedAt, queryId })
-  );
+  result = await pool.query(sql.createResult({ result, executedAt, queryId }));
   res.status(201).json(result.rows[0]);
 };
 
