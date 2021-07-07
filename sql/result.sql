@@ -1,7 +1,7 @@
 
 -- createResult
 INSERT INTO results (result, executed_at, query_id) VALUES
-  (:result, :executedAt  :queryId)
+  (:result, :executedAt,  :queryId)
   RETURNING *;
 
 -- updateResult
