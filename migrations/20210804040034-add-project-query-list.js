@@ -15,20 +15,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('queries', {
-    query_id: { type: 'SERIAL', primaryKey: true },
-    query_name: 'string',
-    query: 'text',
-    options: 'text',
-    formatting: 'text',
-    is_example:'boolean',
-    category: 'string',
-    create_time: { type: 'TIMESTAMP' }
+  return db.createTable('project_has_query', {
+    project_id: 'int',
+    query_id: 'int'
   })
 };
 
 exports.down = function(db) {
-  return db.dropTable('queries')
+  return db.dropTable('project_has_query')
 };
 
 exports._meta = {
