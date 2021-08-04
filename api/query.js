@@ -102,7 +102,7 @@ const getQueryList = async (req, res) => {
   userId = req.user.userid;
 
   result = await pool.query(sql.getQueryList({ userId }));
-  res.json(result.rows[0]);
+  res.json(result.rows);
 };
 
 const setAsExample = async (req, res) => {
