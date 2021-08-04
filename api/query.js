@@ -22,7 +22,7 @@ const queryIsMine = (id, { req }) => {
 const writeQueryValidator = param('id').custom(queryIsMine);
 
 const createQuery = async (req, res) => {
-  queryName = req.body.queryName;
+  queryName = req.body.query_name;
   query = req.body.query;
   options = req.body.options;
   formatting = req.body.formatting;
@@ -43,7 +43,7 @@ const createQuery = async (req, res) => {
 };
 
 const updateQuery = async (req, res) => {
-  queryName = req.body.queryName;
+  queryName = req.body.query_name;
   query = req.body.query;
   options = req.body.options;
   formatting = req.body.formatting;
