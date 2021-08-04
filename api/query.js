@@ -101,7 +101,7 @@ const getQuery = async (req, res) => {
 const getQueryList = async (req, res) => {
   userId = req.user.userid;
 
-  result = await pool.query(sql.getQueryList());
+  result = await pool.query(sql.getQueryList(userId));
   res.json(result.rows[0]);
 };
 
