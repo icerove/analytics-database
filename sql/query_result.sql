@@ -16,4 +16,4 @@ WHERE result_id = :resultId AND query_id = :queryId
 
 -- getResult
 SELECT * FROM results
-WHERE result_id = :resultId
+WHERE query_id = :queryId

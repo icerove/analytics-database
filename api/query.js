@@ -11,7 +11,7 @@ const createQueryValidator = body('content').trim();
 const queryIsMine = (id, { req }) => {
   let uid = Number(id);
   return pool
-    .query(sql.checkQuery({ queryId: uid, projectId: req.body.projectId }))
+    .query(sql.checkQuery({ queryId: uid, userId: req.body.user_id }))
     .then((res) => {
       if (res.rows.length == 0) {
         return Promise.reject("Query doesn't exist or doesn't belong to you");
@@ -22,33 +22,58 @@ const queryIsMine = (id, { req }) => {
 const writeQueryValidator = param('id').custom(queryIsMine);
 
 const createQuery = async (req, res) => {
-  title = req.body.title;
+  queryName = req.body.queryName;
   query = req.body.query;
-  chartType = req.body.chartType;
-  projectId = req.body.projectId;
+  options = req.body.options;
+  formatting = req.body.formatting;
+  createTime = req.body.create_time;
+  userId = req.body.user_id;
 
   result = await pool.query(
-    sql.createQuery({ title, query, chartType, projectId })
+    sql.createQuery({
+      queryName,
+      query,
+      options,
+      formatting,
+      createTime,
+      userId,
+    })
   );
   res.status(201).json(result.rows[0]);
 };
 
 const updateQuery = async (req, res) => {
-  title = req.body.title;
+  queryName = req.body.queryName;
   query = req.body.query;
-  chartType = req.body.chartType;
-  projectId = req.body.projectId;
+  options = req.body.options;
+  formatting = req.body.formatting;
+  createTime = req.body.create_time;
+  userId = req.body.user_id;
 
   queryId = req.params.id;
 
   await pool.query(
-    sql.updateQuery({ title, query, chartType, projectId, queryId })
+    sql.updateQuery({
+      queryName,
+      query,
+      options,
+      formatting,
+      createTime,
+      userId,
+      queryId,
+    })
   );
   res.json('Query is updated');
 };
 
 const deleteQuery = async (req, res) => {
-  await pool.query(sql.deleteQuery({ queryId: req.params.id }));
+  queryId = req.params.id;
+
+  if (queryId === null) {
+    return res.status(200).json('Query is not found');
+  }
+
+  await pool.query(sql.deleteQuery({ queryId }));
   res.json('Query is deleted');
 };
 
@@ -61,6 +86,29 @@ const getQuery = async (req, res) => {
 
   result = await pool.query(sql.getQuery({ queryId }));
   res.json(result.rows[0]);
+};
+
+const setAsExample = async (req, res) => {
+  queryId = req.params.id;
+  category = req.body.category;
+
+  result = await pool.query(sql.setAsExample({ queryId, category }));
+  res.json('Set as example');
+};
+
+const updateCategory = async (req, res) => {
+  queryId = req.params.id;
+  category = req.body.category;
+
+  result = await pool.query(sql.updateCategory({ category, queryId }));
+  res.json('Update category');
+};
+
+const deleteFromExample = async (req, res) => {
+  queryId = req.params.id;
+
+  result = await pool.query(sql.deleteFromExample({ queryId }));
+  res.json('Delete from examples');
 };
 
 const router = new Router();
@@ -78,12 +126,33 @@ router.post(
   validationErrorHandler,
   updateQuery
 );
+router.post(
+  '/:id',
+  tokenRequired,
+  writeQueryValidator,
+  validationErrorHandler,
+  setAsExample
+);
+router.post(
+  '/:id',
+  tokenRequired,
+  writeQueryValidator,
+  validationErrorHandler,
+  updateCategory
+);
 router.delete(
   '/:id',
   tokenRequired,
   writeQueryValidator,
   validationErrorHandler,
   deleteQuery
+);
+router.delete(
+  '/:id',
+  tokenRequired,
+  writeQueryValidator,
+  validationErrorHandler,
+  deleteFromExample
 );
 router.get('/:id', validationErrorHandler, getQuery);
 

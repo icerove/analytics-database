@@ -77,30 +77,19 @@ const getAllMyProject = async (req, res) => {
   res.json(result.rows);
 };
 
-const projectExists = (id) => {
-  let uid = Number(id);
-  return pool.query(sql.readProject({ projectId: uid })).then((res) => {
-    if (res.rows.length === 0) {
-      return Promise.reject("Project doesn't exist");
-    }
-  });
-};
-
-const readQueryValidator = param('id').custom(projectExists);
-
-const getQueryList = async (req, res) => {
+const addQueryToProject = async (req, res) => {
   projectId = req.params.id;
-  result = await pool.query(sql.getQueryList({ projectId }));
-  res.json(result.rows);
-};
+  queryId = req.body.queryId
+  result = await pool.query(sql.addQueryToProject({ projectId, queryId }));
+  res.status(201).json("Query is added to project");
+}
 
-const transferQueryToAnotherProject = async (req, res) => {
+const deleteQueryFromProject = async (req, res) => {
   projectId = req.params.id;
-  queryId = req.body.queryId;
-
-  result = await pool.query(sql.transferQuery({ projectId, queryId }));
-  res.json(result.rows[0]);
-};
+  queryId = req.body.queryId
+  result = await pool.query(sql.addQueryToProject({ projectId, queryId }));
+  res.status(201).json("Query is deleted from project");
+}
 
 const router = new Router();
 router.post(
@@ -122,7 +111,7 @@ router.post(
   tokenRequired,
   writeProjectValidator,
   validationErrorHandler,
-  transferQueryToAnotherProject
+  addQueryToProject
 );
 router.delete(
   '/:id',
@@ -131,7 +120,13 @@ router.delete(
   validationErrorHandler,
   deleteProject
 );
-router.get('/:id', readQueryValidator, validationErrorHandler, getQueryList);
-router.get('/', tokenRequired, getAllMyProject);
+router.delete(
+  '/:id',
+  tokenRequired,
+  writeProjectValidator,
+  validationErrorHandler,
+  deleteQueryFromProject
+);
+router.get('/', tokenRequired,validationErrorHandler, getAllMyProject);
 
 module.exports = router;

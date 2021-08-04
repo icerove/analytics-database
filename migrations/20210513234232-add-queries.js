@@ -21,9 +21,16 @@ exports.up = function(db) {
     query: 'text',
     options: 'text',
     formatting: 'text',
-    is_example:'boolean',
-    category: 'string',
-    create_time: { type: 'TIMESTAMP' }
+    create_time: { type: 'TIMESTAMP' },
+    user_id: {type: 'int', foreignKey: {
+      name: 'user_query_id',
+      table: 'users',
+      rules: {
+        onDelete: 'CASCADE',
+        onUpdate: 'RESTRICT'
+      },
+      mapping: 'user_id'}
+    }
   })
 };
 

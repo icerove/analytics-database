@@ -18,6 +18,10 @@ const getProjects = async (req, res) => {
   res.json(project_result.rows);
 };
 
+const getExampleList = async (req, res) => {
+  examples = await pool.query(sql.getExampleList());
+};
+
 const findProject = async (req, res) => {
   projectName = req.body.projectName;
 
@@ -26,6 +30,7 @@ const findProject = async (req, res) => {
 };
 
 router.get('/', getProjects);
-router.get('/search', findProject);
+router.get('/examples', getExampleList);
+router.get('/search-project', findProject);
 
 module.exports = router;
