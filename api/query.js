@@ -11,7 +11,7 @@ const createQueryValidator = body('content').trim();
 const queryIsMine = (id, { req }) => {
   let uid = Number(id);
   return pool
-    .query(sql.checkQuery({ queryId: uid, userId: req.body.user_id }))
+    .query(sql.checkQuery({ queryId: uid, userId: req.user.userid }))
     .then((res) => {
       if (res.rows.length == 0) {
         return Promise.reject("Query doesn't exist or doesn't belong to you");
@@ -27,7 +27,7 @@ const createQuery = async (req, res) => {
   options = req.body.options;
   formatting = req.body.formatting;
   createTime = req.body.create_time;
-  userId = req.body.user_id;
+  userId = req.user.userid;
 
   result = await pool.query(
     sql.createQuery({
@@ -48,7 +48,7 @@ const updateQuery = async (req, res) => {
   options = req.body.options;
   formatting = req.body.formatting;
   createTime = req.body.create_time;
-  userId = req.body.user_id;
+  userId = req.user.userid;
 
   queryId = req.params.id;
 
