@@ -84,7 +84,24 @@ const getQuery = async (req, res) => {
     return res.status(200).json('Query is not found');
   }
 
+  let projectList;
+  projects = await pool.query(sql.getQuerySetProjectList({ queryId }));
+  if (projects.rows.length > 0) {
+    projectList = projects.rows;
+  }
+
   result = await pool.query(sql.getQuery({ queryId }));
+  let final = result.rows[0];
+  if (projectList) {
+    final = [result.rows[0], projectList];
+  }
+  res.json(final);
+};
+
+const getQueryList = async (req, res) => {
+  userId = req.user.userid;
+
+  result = await pool.query(sql.getQueryList());
   res.json(result.rows[0]);
 };
 
@@ -155,5 +172,5 @@ router.delete(
   deleteFromExample
 );
 router.get('/:id', validationErrorHandler, getQuery);
-
+router.get('/', validationErrorHandler, getQueryList);
 module.exports = router;

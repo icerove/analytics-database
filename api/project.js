@@ -79,17 +79,24 @@ const getAllMyProject = async (req, res) => {
 
 const addQueryToProject = async (req, res) => {
   projectId = req.params.id;
-  queryId = req.body.queryId
+  queryId = req.body.queryId;
   result = await pool.query(sql.addQueryToProject({ projectId, queryId }));
-  res.status(201).json("Query is added to project");
-}
+  res.status(201).json('Query is added to project');
+};
 
 const deleteQueryFromProject = async (req, res) => {
   projectId = req.params.id;
-  queryId = req.body.queryId
+  queryId = req.body.queryId;
   result = await pool.query(sql.addQueryToProject({ projectId, queryId }));
-  res.status(201).json("Query is deleted from project");
-}
+  res.status(201).json('Query is deleted from project');
+};
+
+const getProjectHasQueryList = async (req, res) => {
+  projectId = req.params.id;
+
+  result = await pool.query(sql.getProjectHasQueryList({ projectId }));
+  res.json(result.rows);
+};
 
 const router = new Router();
 router.post(
@@ -127,6 +134,6 @@ router.delete(
   validationErrorHandler,
   deleteQueryFromProject
 );
-router.get('/', tokenRequired,validationErrorHandler, getAllMyProject);
-
+router.get('/', tokenRequired, validationErrorHandler, getAllMyProject);
+router.get('/:id', validationErrorHandler, getProjectHasQueryList);
 module.exports = router;

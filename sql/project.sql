@@ -37,3 +37,7 @@ INSERT INTO project_has_query (project_id, query_id) VALUES
 
 -- deleteQueryFromProject
 DELETE FROM project_has_query where project_id = :projectId AND query_id = :queryId;
+
+-- getProjectHasQueryList
+SELECT * FROM project_has_query
+  WHERE project_id = :projectId;

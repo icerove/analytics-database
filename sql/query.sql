@@ -1,6 +1,6 @@
 -- getQueryList
 SELECT * FROM queries
-  WHERE user_id = :user_id;
+  WHERE user_id = :userId;
 
 -- createQuery
 INSERT INTO queries (query_name, query, options, formatting, create_time, user_id) VALUES
@@ -42,3 +42,7 @@ UPDATE examples SET category = :category WHERE query_id = :queryId
 
 -- getExampleList
 SELECT * FROM examples;
+
+-- getQuerySetProjectList
+SELECT * FROM project_has_query
+  WHERE query_id = :queryId
