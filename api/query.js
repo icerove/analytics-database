@@ -172,5 +172,5 @@ router.delete(
   deleteFromExample
 );
 router.get('/:id', validationErrorHandler, getQuery);
-router.get('/', validationErrorHandler, getQueryList);
+router.get('/', tokenRequired, validationErrorHandler, getQueryList);
 module.exports = router;
