@@ -66,12 +66,13 @@ const deleteProject = async (req, res) => {
   res.json('project is deleted');
 };
 
+const readProject = async (req, res) => {
+  result = await pool.query(sql.readProject());
+  res.json(result.rows[0]);
+};
+
 const getAllMyProject = async (req, res) => {
   userId = req.user.userid;
-
-  if (userId === null) {
-    return res.status(200).json('User is not found');
-  }
 
   result = await pool.query(sql.getAllMyProject({ userId }));
   res.json(result.rows);
@@ -87,7 +88,7 @@ const addQueryToProject = async (req, res) => {
 const deleteQueryFromProject = async (req, res) => {
   projectId = req.params.id;
   queryId = req.body.queryId;
-  result = await pool.query(sql.addQueryToProject({ projectId, queryId }));
+  result = await pool.query(sql.deleteQueryFromProject({ projectId, queryId }));
   res.status(201).json('Query is deleted from project');
 };
 
@@ -113,13 +114,6 @@ router.post(
   validationErrorHandler,
   updateProject
 );
-router.post(
-  '/:id',
-  tokenRequired,
-  writeProjectValidator,
-  validationErrorHandler,
-  addQueryToProject
-);
 router.delete(
   '/:id',
   tokenRequired,
@@ -127,13 +121,22 @@ router.delete(
   validationErrorHandler,
   deleteProject
 );
+router.post(
+  '/add-query/:id',
+  tokenRequired,
+  writeProjectValidator,
+  validationErrorHandler,
+  addQueryToProject
+);
 router.delete(
-  '/:id',
+  '/add-query/:id',
   tokenRequired,
   writeProjectValidator,
   validationErrorHandler,
   deleteQueryFromProject
 );
+router.get('/add-query/:id', validationErrorHandler, getProjectHasQueryList);
+router.get('/:id', validationErrorHandler, readProject);
 router.get('/', tokenRequired, validationErrorHandler, getAllMyProject);
-router.get('/:id', validationErrorHandler, getProjectHasQueryList);
+
 module.exports = router;

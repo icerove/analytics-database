@@ -1,3 +1,6 @@
+-- getAllProjects
+SELECT * from projects;
+
 -- getAllMyProject
 SELECT * FROM projects
   WHERE user_id = :userId;
@@ -22,9 +25,6 @@ WHERE user_id = :userId AND project_id = :projectId;
 -- readProject
 SELECT * FROM projects
 WHERE project_id = :projectId;
-
--- getAllProjects
-SELECT * from projects;
 
 -- findProject
 SELECT * FROM projects

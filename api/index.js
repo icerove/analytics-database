@@ -20,6 +20,7 @@ const getProjects = async (req, res) => {
 
 const getExampleList = async (req, res) => {
   examples = await pool.query(sql.getExampleList());
+  res.json(examples.rows);
 };
 
 const findProject = async (req, res) => {
