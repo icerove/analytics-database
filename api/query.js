@@ -141,14 +141,14 @@ router.post(
   updateQuery
 );
 router.post(
-  '/:id',
+  '/set-example/:id',
   tokenRequired,
   writeQueryValidator,
   validationErrorHandler,
   setAsExample
 );
 router.post(
-  '/:id',
+  '/set-example/:id',
   tokenRequired,
   writeQueryValidator,
   validationErrorHandler,
@@ -162,7 +162,7 @@ router.delete(
   deleteQuery
 );
 router.delete(
-  '/:id',
+  '/set-example/:id',
   tokenRequired,
   writeQueryValidator,
   validationErrorHandler,
