@@ -35,8 +35,10 @@ const createResult = async (req, res) => {
 const updateResult = async (req, res) => {
   result = req.body.result;
   resultId = req.params.id;
+  executedAt = req.body.executedAt;
+  queryId = req.body.queryId;
 
-  await pool.query(sql.updateResult({ result, executedAt, resultId }));
+  await pool.query(sql.updateResult({ result, executedAt, queryId, resultId }));
   res.json('Result is updated');
 };
 
