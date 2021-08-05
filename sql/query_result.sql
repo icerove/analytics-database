@@ -6,7 +6,7 @@ INSERT INTO results (query_result, executed_at, query_id) VALUES
 -- updateResult
 UPDATE results SET 
 query_result = :result, 
-executed_at = :executedAt
+executed_at = :executedAt,
 query_id = :queryId
 WHERE result_id = :resultId
 RETURNING *;
