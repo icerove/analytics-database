@@ -22,11 +22,11 @@ const queryIsMine = (id, { req }) => {
 const writeQueryValidator = param('id').custom(queryIsMine);
 
 const createQuery = async (req, res) => {
-  queryName = req.body.query_name;
+  queryName = req.body.queryName;
   query = req.body.query;
   options = req.body.options;
   formatting = req.body.formatting;
-  createTime = req.body.create_time;
+  createTime = req.body.createTime;
   userId = req.user.userid;
 
   result = await pool.query(
@@ -43,11 +43,11 @@ const createQuery = async (req, res) => {
 };
 
 const updateQuery = async (req, res) => {
-  queryName = req.body.query_name;
+  queryName = req.body.queryName;
   query = req.body.query;
   options = req.body.options;
   formatting = req.body.formatting;
-  createTime = req.body.create_time;
+  createTime = req.body.createTime;
   userId = req.user.userid;
 
   queryId = req.params.id;
