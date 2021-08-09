@@ -140,6 +140,13 @@ router.post(
   validationErrorHandler,
   updateQuery
 );
+router.delete(
+  '/:id',
+  tokenRequired,
+  writeQueryValidator,
+  validationErrorHandler,
+  deleteQuery
+);
 router.post(
   '/set-example/:id',
   tokenRequired,
@@ -148,19 +155,13 @@ router.post(
   setAsExample
 );
 router.post(
-  '/set-example/:id',
+  '/update-example/:id',
   tokenRequired,
   writeQueryValidator,
   validationErrorHandler,
   updateCategory
 );
-router.delete(
-  '/:id',
-  tokenRequired,
-  writeQueryValidator,
-  validationErrorHandler,
-  deleteQuery
-);
+
 router.delete(
   '/set-example/:id',
   tokenRequired,

@@ -129,7 +129,7 @@ router.post(
   addQueryToProject
 );
 router.delete(
-  '/update-query/:id',
+  '/delete-query/:id',
   tokenRequired,
   writeProjectValidator,
   validationErrorHandler,
