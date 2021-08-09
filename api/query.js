@@ -170,5 +170,9 @@ router.delete(
 );
 router.get('/:id', validationErrorHandler, getQuery);
 router.get('/', tokenRequired, validationErrorHandler, getQueryList);
-router.get('/add-project', validationErrorHandler, getQuerySetProjectList);
+router.get(
+  '/added-project/:id',
+  validationErrorHandler,
+  getQuerySetProjectList
+);
 module.exports = router;

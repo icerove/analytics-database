@@ -129,13 +129,13 @@ router.post(
   addQueryToProject
 );
 router.delete(
-  '/add-query/:id',
+  '/update-query/:id',
   tokenRequired,
   writeProjectValidator,
   validationErrorHandler,
   deleteQueryFromProject
 );
-router.get('/add-query/:id', validationErrorHandler, getProjectHasQueryList);
+router.get('/added-query/:id', validationErrorHandler, getProjectHasQueryList);
 router.get('/:id', validationErrorHandler, readProject);
 router.get('/', tokenRequired, validationErrorHandler, getAllMyProject);
 
