@@ -15,3 +15,8 @@ SELECT * FROM users
 INSERT INTO users (user_name, email, password) VALUES
   (:username, :email, crypt(:password, gen_salt('bf', 8)))
   RETURNING *;
+
+-- resetPassword
+UPDATE users
+SET password = crypt(:password, gen_salt('bf', 8))
+WHERE email = :email;
