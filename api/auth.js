@@ -28,6 +28,16 @@ const rejectEmailExists = (email) => {
 
 const emailNotExistValidator = body('email').trim().custom(rejectEmailExists);
 
+const emailExists = (email) => {
+  return pool.query(sql.findUserByEmail({ email })).then((res) => {
+    if (res.rows.length === 0) {
+      return Promise.reject('Email do not exist');
+    }
+  });
+};
+
+const emailExistValidator = body('email').trim().custom(emailExists);
+
 const checkUsernamePassword = (password, { req }) => {
   return pool
     .query(sql.checkPassword({ username: req.body.username, password }))
@@ -100,7 +110,7 @@ const login = (req, res) => {
   });
 };
 
-const resetPasswordValidator = [emailValidator, passwordValidator];
+const resetPasswordValidator = [emailExistValidator, passwordValidator];
 
 const resetPassword = async (req, res) => {
   password = req.body.password;
