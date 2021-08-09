@@ -116,7 +116,7 @@ const resetPassword = async (req, res) => {
   password = req.body.password;
   email = req.body.email;
 
-  await pool.query(sql.resetPassword(password, email));
+  await pool.query(sql.resetPassword({ password, email }));
   res.json('password is reset');
 };
 
