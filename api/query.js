@@ -107,7 +107,7 @@ const setAsExample = async (req, res) => {
   category = req.body.category;
 
   result = await pool.query(sql.setAsExample({ queryId, category }));
-  res.json('Set as example' + queryId);
+  res.json('Set as example ' + queryId);
 };
 
 const updateCategory = async (req, res) => {
@@ -115,21 +115,21 @@ const updateCategory = async (req, res) => {
   category = req.body.category;
 
   result = await pool.query(sql.updateCategory({ category, queryId }));
-  res.json('Update category' + queryId);
+  res.json('Update category ' + queryId);
 };
 
 const deleteFromExample = async (req, res) => {
   queryId = req.params.id;
 
   result = await pool.query(sql.deleteFromExample({ queryId }));
-  res.json('Delete from examples' + queryId);
+  res.json('Delete from examples ' + queryId);
 };
 
 const AddLikeToQuery = async (req, res) => {
   userId = req.user.userid;
   queryId = req.params.id;
 
-  result = await pool.query(sql.AddLikeToQuery({ queryId, usreId }));
+  result = await pool.query(sql.AddLikeToQuery({ queryId, userId }));
   res.json('Like query ' + queryId);
 };
 
@@ -137,7 +137,7 @@ const RemoveLikeFromQuery = async (req, res) => {
   userId = req.user.userid;
   queryId = req.params.id;
 
-  await pool.query(sql.RemoveLikeFromQuery({ queryId, usreId }));
+  await pool.query(sql.RemoveLikeFromQuery({ queryId, userId }));
   res.json('remove like from query ' + queryId);
 };
 
