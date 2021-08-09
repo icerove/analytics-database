@@ -46,3 +46,15 @@ SELECT * FROM examples;
 -- getQuerySetProjectList
 SELECT * FROM project_has_query
   WHERE query_id = :queryId
+
+-- AddLikeToQuery
+INSERT INTO query_has_like (query_id, user_id) VALUES
+  (:queryId, :userId)
+  RETURNING *;
+
+-- RemoveLikeFromQuery
+DELETE FROM query_has_like where query_id = :queryId AND user_id = :userId
+
+-- getLikesForQuery
+SELECT * FROM query_has_like
+  WHERE query_id = :queryId

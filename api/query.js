@@ -107,7 +107,7 @@ const setAsExample = async (req, res) => {
   category = req.body.category;
 
   result = await pool.query(sql.setAsExample({ queryId, category }));
-  res.json('Set as example');
+  res.json('Set as example' + queryId);
 };
 
 const updateCategory = async (req, res) => {
@@ -115,14 +115,37 @@ const updateCategory = async (req, res) => {
   category = req.body.category;
 
   result = await pool.query(sql.updateCategory({ category, queryId }));
-  res.json('Update category');
+  res.json('Update category' + queryId);
 };
 
 const deleteFromExample = async (req, res) => {
   queryId = req.params.id;
 
   result = await pool.query(sql.deleteFromExample({ queryId }));
-  res.json('Delete from examples');
+  res.json('Delete from examples' + queryId);
+};
+
+const AddLikeToQuery = async (req, res) => {
+  userId = req.user.userid;
+  queryId = req.params.id;
+
+  result = await pool.query(sql.AddLikeToQuery({ queryId, usreId }));
+  res.json('Like query ' + queryId);
+};
+
+const RemoveLikeFromQuery = async (req, res) => {
+  userId = req.user.userid;
+  queryId = req.params.id;
+
+  await pool.query(sql.RemoveLikeFromQuery({ queryId, usreId }));
+  res.json('remove like from query ' + queryId);
+};
+
+const getLikesForQuery = async (req, res) => {
+  queryId = req.params.id;
+
+  await pool.query(sql.getLikesForQuery({ queryId }));
+  res.json('get likes for query ' + queryId);
 };
 
 const router = new Router();
@@ -163,11 +186,23 @@ router.post(
 );
 
 router.delete(
-  '/set-example/:id',
+  '/delete-example/:id',
   tokenRequired,
   writeQueryValidator,
   validationErrorHandler,
   deleteFromExample
+);
+router.post(
+  '/add-like/:id',
+  tokenRequired,
+  validationErrorHandler,
+  AddLikeToQuery
+);
+router.delete(
+  '/remove-like/:id',
+  tokenRequired,
+  validationErrorHandler,
+  RemoveLikeFromQuery
 );
 router.get('/:id', validationErrorHandler, getQuery);
 router.get('/', tokenRequired, validationErrorHandler, getQueryList);
@@ -176,4 +211,5 @@ router.get(
   validationErrorHandler,
   getQuerySetProjectList
 );
+router.get('/added-like/:id', validationErrorHandler, getLikesForQuery);
 module.exports = router;
